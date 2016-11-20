@@ -136,6 +136,39 @@ XML
 XML
             ],
             [
+            '<?php $a = [&$a];', <<<XML
+<?xml version="1.0"?>
+<ast>
+  <AST_STMT_LIST lineno="1">
+    <AST_ASSIGN lineno="1">
+      <var>
+        <AST_VAR lineno="1">
+          <name>
+            <scalar value="a" type="string"/>
+          </name>
+        </AST_VAR>
+      </var>
+      <expr>
+        <AST_ARRAY lineno="1">
+          <AST_ARRAY_ELEM lineno="1" BY_REFERENCE="BY_REFERENCE">
+            <value>
+              <AST_VAR lineno="1">
+                <name>
+                  <scalar value="a" type="string"/>
+                </name>
+              </AST_VAR>
+            </value>
+            <key/>
+          </AST_ARRAY_ELEM>
+        </AST_ARRAY>
+      </expr>
+    </AST_ASSIGN>
+  </AST_STMT_LIST>
+</ast>
+
+XML
+            ],
+            [
             '<?php function hoge($a) {return $a + 1;}', <<<XML
 <?xml version="1.0"?>
 <ast>
