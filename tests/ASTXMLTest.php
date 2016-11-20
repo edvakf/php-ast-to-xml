@@ -263,4 +263,27 @@ XML
         $domxml->loadXML($xml->asXML());
         return $domxml->saveXML();
     }
+
+    /**
+     * @dataProvider xpathProvider
+     */
+    public function test_xpath($code, $xpath)
+    {
+        $ast = \ast\parse_code($code, /*version*/ 35);
+        $xml = ASTXML::ast2xml($ast);
+        //var_dump($this->prettyXML($xml));
+        $results = $xml->xpath($xpath);
+        $this->assertTrue(isset($results[0]));
+        //var_dump($results[0]);
+    }
+
+    public function xpathProvider()
+    {
+        return [
+            ['<?php if ($a = 1) {}', '//AST_IF//AST_ASSIGN'], // assignment within if is not prefered
+            ['<?php in_array("", [1]);', '//AST_CALL[./expr/AST_NAME/name/scalar[@value="in_array"] and count(./args/AST_ARG_LIST/*) != 3]'], // in_array without the third argument is a bad practice
+            ['<?php function a($a) {return $a + 1;}', '//AST_PARAM[./type[not(node())]]'], // param type is not provided
+            ['<?php function a($a) {return $a + 1;}', '//AST_FUNC_DECL[./returnType[not(node())]]'], // param type is not provided
+        ];
+    }
 }
