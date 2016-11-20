@@ -41,7 +41,10 @@ function dig($xml, $node) {
 
     $self->addAttribute('lineno', $node->lineno);
     if (ast\kind_uses_flags($node->kind)) {
-      $self->addAttribute('flags', getFlagNames($node->kind, $node->flags));
+      $flags = getFlagNames($node->kind, $node->flags);
+      foreach ($flags as $flag) {
+        $self->addAttribute($flag, 'true');
+      }
     }
 
     if ($node instanceof ast\Node\Decl) {
@@ -197,9 +200,9 @@ function getFlagNames($kind, $flags) {
 
   if (in_array($kind, [ast\AST_ARRAY_ELEM, ast\AST_CLOSURE_VAR], true)) {
     if ($flags === 1) {
-      return 'BY_REFERENCE';
+      return ['BY_REFERENCE'];
     } else {
-      return '';
+      return [];
     }
   }
 
@@ -209,7 +212,7 @@ function getFlagNames($kind, $flags) {
       foreach ($const['flags'] as $f) {
         if ($const['exclusive']) {
           if ($flags === constant($f)) {
-            return explode("\\", $f)[2];
+            return [explode("\\", $f)[2]];
           }
         } else {
           if ($flags & constant($f)) {
@@ -217,10 +220,10 @@ function getFlagNames($kind, $flags) {
           }
         }
       }
-      return implode(',', $flag_list);
+      return $flag_list;
     }
   }
-  return '';
+  return [];
 }
 
 dig($xml, $ast);
