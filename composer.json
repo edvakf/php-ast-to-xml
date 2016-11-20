@@ -1,0 +1,13 @@
+{
+    "name": "atsushi/php-ast-to-xml",
+    "description": "Converts the AST obained by nikic/php-ast to an XML",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Atsushi Takayama",
+            "email": "taka.atsushi@gmail.com"
+        }
+    ],
+    "require": {}
+}
