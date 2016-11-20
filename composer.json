@@ -9,5 +9,16 @@
             "email": "taka.atsushi@gmail.com"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "astxml\\": "lib/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "5.*"
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
     "require": {}
 }
