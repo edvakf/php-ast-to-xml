@@ -33,7 +33,7 @@ function dig($xml, $node) {
     } elseif (is_string($node)) {
       $self->addAttribute('type', 'string');
     }
-    $self[0] = $node;
+    $self->addAttribute('value', $node);
     return $self;
   } elseif ($node instanceof ast\Node) {
 
