@@ -43,7 +43,7 @@ function dig($xml, $node) {
     if (ast\kind_uses_flags($node->kind)) {
       $flags = getFlagNames($node->kind, $node->flags);
       foreach ($flags as $flag) {
-        $self->addAttribute($flag, 'true');
+        $self->addAttribute($flag, $flag); // XML's boolean attributes often have the value equal to its name
       }
     }
 
