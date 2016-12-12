@@ -1,0 +1,23 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__ . "/../vendor/autoload.php";
+
+if (count($argv) < 3) {
+  echo 'query lines in a php file by XPath' . PHP_EOL;
+  echo 'usage: ' . $argv[0] . ' file.php xpath' . PHP_EOL;
+}
+
+$file = $argv[1];
+$xpath = $argv[2];
+
+$ast = \ast\parse_file($file, 35);
+$xml = \astxml\ASTXML::ast2xml($ast);
+$results = $xml->xpath($xpath);
+
+foreach ($results as $result) {
+  $lineno = $result->attributes()->lineno;
+  if ($lineno) {
+    echo $file . ":" . (int)$lineno . PHP_EOL;
+  }
+}

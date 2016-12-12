@@ -1,0 +1,20 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__ . "/../vendor/autoload.php";
+
+if (count($argv) < 2) {
+  echo 'converts a php file to xml' . PHP_EOL;
+  echo 'usage: ' . $argv[0] . ' file.php' . PHP_EOL;
+}
+
+$file = $argv[1];
+
+$ast = \ast\parse_file($file, 35);
+$xml = \astxml\ASTXML::ast2xml($ast);
+
+$doc = new \DOMDocument('1.0');
+$doc->preserveWhiteSpace = true;
+$doc->formatOutput = true;
+$doc->loadXML($xml->asXML());
+echo $doc->saveXML();
